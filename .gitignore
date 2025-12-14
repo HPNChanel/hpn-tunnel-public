@@ -1,0 +1,86 @@
+# HPN Tunnel Public Repository - Strict Protection
+# This repo is a PUBLIC SHOWROOM ONLY - NO source code should ever be committed
+
+# Block ALL files by default
+*
+!*/
+
+# ONLY allow these specific files and directories
+!README.md
+!LICENSE
+!INSTALL.md
+!BUILD.md
+!CONTRIBUTING.md
+!.gitignore
+
+# Allow assets directory and common image formats
+!assets/
+!assets/**/*.png
+!assets/**/*.jpg
+!assets/**/*.jpeg
+!assets/**/*.svg
+!assets/**/*.ico
+!assets/**/*.gif
+
+# Allow install scripts (if added later)
+!install.sh
+!install.ps1
+
+# Block ALL source code and build artifacts
+*.go
+go.mod
+go.sum
+*.exe
+*.dll
+*.so
+*.dylib
+*.a
+*.o
+*.obj
+*.lib
+
+# Block all build and development directories
+dist/
+build/
+bin/
+obj/
+vendor/
+node_modules/
+.git/
+.github/
+.vscode/
+.idea/
+
+# Block all common source code patterns
+*.c
+*.cpp
+*.h
+*.hpp
+*.java
+*.py
+*.js
+*.ts
+*.tsx
+*.jsx
+*.rb
+*.php
+*.rs
+*.swift
+*.kt
+
+# Block configuration that might leak info
+*.env
+*.env.*
+.env.local
+.env.production
+config.yaml
+config.json
+secrets.*
+
+# Block any archives (to prevent accidental source dumps)
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.rar
+*.7z
