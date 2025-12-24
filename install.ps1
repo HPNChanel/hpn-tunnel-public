@@ -473,6 +473,49 @@ function Verify-Installation {
 }
 
 # ══════════════════════════════════════════════════════════════════════════════
+# 🔥 FIREWALL AUTO-UNBLOCK - Allow UDP traffic for QUIC tunnel
+# ══════════════════════════════════════════════════════════════════════════════
+function Add-FirewallRules {
+    param([string]$BinaryPath)
+    
+    Write-Step "Configuring Windows Firewall for QUIC tunnel..."
+    
+    try {
+        # Remove old rules if they exist (idempotent - safe to run multiple times)
+        Get-NetFirewallRule -DisplayName "Penrift Tunnel*" -ErrorAction SilentlyContinue | 
+            Remove-NetFirewallRule -ErrorAction SilentlyContinue
+        
+        # Allow outbound UDP (required for QUIC connections to relay server)
+        New-NetFirewallRule -DisplayName "Penrift Tunnel (UDP Out)" `
+            -Description "Allow Penrift CLI to connect to relay server via QUIC/UDP" `
+            -Direction Outbound `
+            -Program $BinaryPath `
+            -Action Allow `
+            -Protocol UDP `
+            -ErrorAction Stop | Out-Null
+        
+        # Allow inbound UDP (required for P2P hole-punch in Penrift Drop)
+        New-NetFirewallRule -DisplayName "Penrift Tunnel (UDP In)" `
+            -Description "Allow Penrift CLI to receive P2P connections for file transfer" `
+            -Direction Inbound `
+            -Program $BinaryPath `
+            -Action Allow `
+            -Protocol UDP `
+            -ErrorAction Stop | Out-Null
+        
+        Write-Success "Firewall rules configured (UDP allowed)"
+        return $true
+        
+    } catch {
+        # Non-fatal: installer continues even if firewall config fails
+        # This can happen if user is not admin or if firewall service is disabled
+        Write-Warn "Could not configure firewall automatically: $_"
+        Write-Warn "You may need to manually allow Penrift through Windows Firewall."
+        return $false
+    }
+}
+
+# ══════════════════════════════════════════════════════════════════════════════
 # 🎉 SUCCESS MESSAGE
 # ══════════════════════════════════════════════════════════════════════════════
 function Show-SuccessMessage {
@@ -520,6 +563,9 @@ function Main {
     $verified = Verify-Installation -ExpectedVersion $Version -BinaryPath $BinaryPath
     
     if ($verified) {
+        # Step 7: Configure Windows Firewall (auto-unblock UDP for QUIC)
+        Add-FirewallRules -BinaryPath $BinaryPath
+        
         Show-SuccessMessage -Version $Version
     } else {
         exit 1
