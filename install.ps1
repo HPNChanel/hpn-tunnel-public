@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Penrift Installer v1.0.3 - "Bulldozer" Edition
+    Penrift Installer v1.0.7 - "Bulldozer" Edition
     https://github.com/HPNChanel/hpn-tunnel-public
 
 .DESCRIPTION
@@ -23,7 +23,7 @@ $ErrorActionPreference = "Stop"
 # ══════════════════════════════════════════════════════════════════════════════
 # ⚙️ CONFIGURATION
 # ══════════════════════════════════════════════════════════════════════════════
-$ExpectedVersion = "v1.0.3"
+$ExpectedVersion = "v1.0.7"
 $Repo = "HPNChanel/hpn-tunnel-public"
 $FileName = "penrift-windows-amd64.zip"
 $BinaryName = "penrift.exe"
@@ -43,7 +43,7 @@ function Write-Step { param($msg) Write-Host "[→] " -ForegroundColor Magenta -
 function Show-Banner {
     Write-Host ""
     Write-Host "╔═══════════════════════════════════════════════════════════╗" -ForegroundColor Cyan
-    Write-Host "║          🌀 Penrift Installer v1.0.3 - BULLDOZER          ║" -ForegroundColor Cyan
+    Write-Host "║          🌀 Penrift Installer v1.0.7 - BULLDOZER          ║" -ForegroundColor Cyan
     Write-Host "║          Expose localhost instantly. P2P & Relay.         ║" -ForegroundColor Cyan
     Write-Host "╚═══════════════════════════════════════════════════════════╝" -ForegroundColor Cyan
     Write-Host ""

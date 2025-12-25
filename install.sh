@@ -24,7 +24,7 @@ set -euo pipefail
 # ══════════════════════════════════════════════════════════════════════════════
 # ⚙️ CONFIGURATION
 # ══════════════════════════════════════════════════════════════════════════════
-EXPECTED_VERSION="v1.0.3"
+EXPECTED_VERSION="v1.0.7"
 REPO="HPNChanel/hpn-tunnel-public"
 BINARY_NAME="penrift"
 INSTALL_DIR="${PENRIFT_INSTALL_DIR:-/usr/local/bin}"
